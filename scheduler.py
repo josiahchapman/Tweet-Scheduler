@@ -1,22 +1,51 @@
 import time as tm
 
 
-def days_in_month(mnth):
-    month_days = {
-        "01": "31",
-        "02": "28",  # change to check if leap year and change to '29'
-        "03": "31",
-        "04": "30",
-        "05": "31",
-        "06": "30",
-        "07": "31",
-        "08": "31",
-        "09": "30",
-        "10": "31",
-        "11": "30",
-        "12": "31"
-    }
-    return month_days.get(mnth)
+def days_in_month(mnth, yr):
+    def leap_year(mnth):
+        leapyr_month_days = {
+            "01": "31",
+            "02": "29",
+            "03": "31",
+            "04": "30",
+            "05": "31",
+            "06": "30",
+            "07": "31",
+            "08": "31",
+            "09": "30",
+            "10": "31",
+            "11": "30",
+            "12": "31"
+        }
+        return leapyr_month_days.get(mnth)
+
+    def not_leap_year(mnth):
+        month_days = {
+            "01": "31",
+            "02": "28",
+            "03": "31",
+            "04": "30",
+            "05": "31",
+            "06": "30",
+            "07": "31",
+            "08": "31",
+            "09": "30",
+            "10": "31",
+            "11": "30",
+            "12": "31"
+        }
+        return month_days.get(mnth)
+
+    if yr % 4 == 0:
+        if yr % 100 == 0:
+            if yr % 400 == 0:
+                leap_year(mnth)
+            else:
+                not_leap_year(mnth)
+        else:
+            leap_year(mnth)
+    else:
+        not_leap_year(mnth)
 
 
 def month_nums(mnth_num):
@@ -98,7 +127,7 @@ while len(month) != 2 and (0 >= int(month) > 12):
     print("Month out of bounds")
     month = input("Reenter month (mm): ")
 
-while len(day) != 2 and (0 >= int(day) > days_in_month(month)):
+while len(day) != 2 and (0 >= int(day) > int(days_in_month(month, int(year)))):
     print("Day out of bounds")
     day = input("Reenter day (dd) for corresponding month (" + month_nums(month) + "): ")
 
