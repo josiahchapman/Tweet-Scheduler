@@ -1,4 +1,5 @@
 import time as tm
+import re
 
 
 def days_in_month(mnth, yr):
@@ -69,27 +70,27 @@ def month_nums(mnth_num):
 def twenty_four_hour_time(hr):
     twenty_four_to_std = {
         "12 a": "00",
-        "1 a": "01",
-        "2 a": "02",
-        "3 a": "03",
-        "4 a": "04",
-        "5 a": "05",
-        "6 a": "06",
-        "7 a": "07",
-        "8 a": "08",
-        "9 a": "09",
+        "01 a": "01",
+        "02 a": "02",
+        "03 a": "03",
+        "04 a": "04",
+        "05 a": "05",
+        "06 a": "06",
+        "07 a": "07",
+        "08 a": "08",
+        "09 a": "09",
         "10 a": "10",
         "11 a": "11",
         "12 p": "12",
-        "1 p": "13",
-        "2 p": "14",
-        "3 p": "15",
-        "4 p": "16",
-        "5 p": "17",
-        "6 p": "18",
-        "7 p": "19",
-        "8 p": "20",
-        "9 p": "21",
+        "01 p": "13",
+        "02 p": "14",
+        "03 p": "15",
+        "04 p": "16",
+        "05 p": "17",
+        "06 p": "18",
+        "07 p": "19",
+        "08 p": "20",
+        "09 p": "21",
         "10 p": "22",
         "11 p": "23",
     }
@@ -103,10 +104,11 @@ while len(text) > 280:
     text = input("Enter Tweet text: ")
 
 date = input("Enter the date you want your tweet to go out (mm/dd/yyyy): ")
+date_format = re.compile(".{2}/.{2}/.{4}")
 
-while "/" not in date:  # change condition to accommodate for year
+while not date_format.match(date):
     print("Incorrect format")
-    date = input("Enter the date you want your tweet to go out (mm/dd): ")
+    date = input("Enter the date you want your tweet to go out (mm/dd/yyyy): ")
 
 date = date.split("/")
 
@@ -123,21 +125,22 @@ while int(current_year) > int(year) > (int(current_year) + 2):
         print("This date is history (it already happened)")
         year = input("Reenter year (yyyy): ")
 
-while len(month) != 2 and (0 >= int(month) > 12):
+while len(month) != 2 or (0 >= int(month) > 12):
     print("Month out of bounds")
     month = input("Reenter month (mm): ")
 
-while len(day) != 2 and (0 >= int(day) > int(days_in_month(month, int(year)))):
+while len(day) != 2 or (0 >= int(day) > int(days_in_month(month, int(year)))):
     print("Day out of bounds")
     day = input("Reenter day (dd) for corresponding month (" + month_nums(month) + "): ")
 
 time = input("Enter the time you want your tweet to go out on " + month_nums(month) + " " + day
-             + " ('11:21' OR '5:45'): ")
+             + " ('11:21' OR '05:45'): ")
+time_format = re.compile(".{2}:.{2}")
 
-while ":" not in time and 4 > len(time) > 5:
+while not time_format.match(time):
     print("Incorrect format")
     time = input("Enter the time you want your tweet to go out on " + month_nums(month) + " " + day
-                 + " ('11:21' OR '5:45'): ")
+                 + " ('11:21' OR '05:45'): ")
 
 time = time.split(":")
 
@@ -146,7 +149,7 @@ minute = time[1]
 
 while 1 > int(hour) > 12:
     print("Hour out of bounds")
-    hour = input("Reenter hour (ex. '5' OR '11'): ")
+    hour = input("Reenter hour (hh): ")
 
 while 0 > int(minute) > 59:
     print("Minute out of bounds")
