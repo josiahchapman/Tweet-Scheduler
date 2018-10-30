@@ -106,7 +106,7 @@ while len(text) > 280:
 date = input("Enter the date you want your tweet to go out (mm/dd/yyyy): ")
 date_format = re.compile(".{2}/.{2}/.{4}")
 
-while len(date) != 8 and not date_format.match(date):
+while len(date) != 10 and not date_format.match(date):
     print("Incorrect format")
     date = input("Enter the date you want your tweet to go out (mm/dd/yyyy): ")
 
