@@ -97,16 +97,16 @@ def twenty_four_hour_time(hr):
     return twenty_four_to_std.get(hr)
 
 
-text = input("Enter Tweet text: ")
+text = input("Enter tweet text: ")
 
 while len(text) > 280:
     print("Tweet is too long")
-    text = input("Enter Tweet text: ")
+    text = input("Enter tweet text: ")
 
 date = input("Enter the date you want your tweet to go out (mm/dd/yyyy): ")
 date_format = re.compile(".{2}/.{2}/.{4}")
 
-while len(date) != 10 and not date_format.match(date):
+while len(date) != 10 or not date_format.match(date):
     print("Incorrect format")
     date = input("Enter the date you want your tweet to go out (mm/dd/yyyy): ")
 
@@ -137,7 +137,7 @@ time = input("Enter the time you want your tweet to go out on " + month_nums(mon
              + " ('11:21' OR '05:45'): ")
 time_format = re.compile(".{2}:.{2}")
 
-while len(time) != 5 and not time_format.match(time):
+while len(time) != 5 or not time_format.match(time):
     print("Incorrect format")
     time = input("Enter the time you want your tweet to go out on " + month_nums(month) + " " + day
                  + " ('11:21' OR '05:45'): ")
@@ -147,11 +147,11 @@ time = time.split(":")
 hour = time[0]
 minute = time[1]
 
-while 1 > int(hour) > 12:
+while 1 > int(hour) or int(hour) > 12:
     print("Hour out of bounds")
     hour = input("Reenter hour (hh): ")
 
-while 0 > int(minute) > 59:
+while 0 > int(minute) or int(minute) > 59:
     print("Minute out of bounds")
     minute = input("Reenter minute (mm): ")
 
@@ -166,9 +166,8 @@ hour = twenty_four_hour_time(hour + " " + am_pm)
 
 tweet_time = month + day + year + hour + minute
 
-print(tweet_time)
-
-# add function that sorts entries in chronological order by date/time
+# add function that sorts entries in chronological order by date/time to simplify entry search in 'publish'
 output = open("output.txt", "a")
-output.write(tweet_time + "#####" + text + "\n")  # find better way to separate date/time and tweet text than '#####'
+output.write("#" + tweet_time + "\n")  # '#' at beginning of line denotes date/time
+output.write("$" + text + "\n")  # '$' at beginning of line denotes tweet text
 output.close()
