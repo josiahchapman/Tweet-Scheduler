@@ -1,2 +1,2 @@
 # Tweet-Scheduler
-A Python wrapper for the Twitter API implemented to schedule tweets.
+A tweet scheduler that posts tweets using the python-twitter API client.
