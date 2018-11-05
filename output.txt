@@ -1,1 +1,2 @@
-010120181222#####Sample tweet text.
+#110520181025
+$Sample tweet text.
