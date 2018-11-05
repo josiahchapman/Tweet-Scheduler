@@ -14,16 +14,16 @@ def check():
     current_time = time.strftime("%m%d%Y%H%M")
     output = open("output.txt", "r+")
     lines = output.readlines()
+    output.close()
 
     for i in range(len(lines)):
-        temp = lines[i].split("#####")
+        if lines[i][0] == '#':  # checks if line contains date/time (first char is '#' when line contains date/time)
+            date_time = lines[i][1:]  # remove the '#' from line
+            text = lines[i+1][1:]  # removes the '$' from line
 
-        date = temp[0]
-        text = temp[1]
-
-        if date == current_time:
-            api.PostUpdate(text)
-            # delete line from the file after publishing tweet
+            if int(date_time) == int(current_time):
+                api.PostUpdate(text)
+                # delete line from the file after publishing tweet
 
 
 if __name__ == "__main__":
