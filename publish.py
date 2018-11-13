@@ -1,7 +1,6 @@
 import time
 import twitter
 
-
 # user should enter corresponding Twitter account information
 api = twitter.Api(consumer_key=[consumer_key],
                   consumer_secret=[consumer_secret],
